@@ -17,7 +17,6 @@ node_modules/
 *.tsbuildinfo
 
 # IDE
-dist
 .vscode
 .idea
 cli-binaries
