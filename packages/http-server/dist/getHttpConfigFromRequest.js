@@ -12,8 +12,8 @@ const IntegerFromString = D.parse(s => {
     return !isNaN(parsedString) ? D.success(parsedString) : D.failure(s, 'a number');
 });
 const PreferencesDecoder = D.partial({
-    code: function_1.pipe(D.string, IntegerFromString),
-    dynamic: function_1.pipe(D.string, BooleanFromString),
+    code: (0, function_1.pipe)(D.string, IntegerFromString),
+    dynamic: (0, function_1.pipe)(D.string, BooleanFromString),
     example: D.string,
 });
 const getHttpConfigFromRequest = (req) => {
@@ -21,6 +21,6 @@ const getHttpConfigFromRequest = (req) => {
     const preferences = req.headers && req.headers['prefer']
         ? parsePreferHeader(req.headers['prefer'])
         : { code: (_a = req.url.query) === null || _a === void 0 ? void 0 : _a.__code, dynamic: (_b = req.url.query) === null || _b === void 0 ? void 0 : _b.__dynamic, example: (_c = req.url.query) === null || _c === void 0 ? void 0 : _c.__example };
-    return function_1.pipe(PreferencesDecoder.decode(preferences), E.bimap(err => prism_http_1.ProblemJsonError.fromTemplate(prism_http_1.UNPROCESSABLE_ENTITY, D.draw(err)), parsed => ({ code: parsed === null || parsed === void 0 ? void 0 : parsed.code, exampleKey: parsed === null || parsed === void 0 ? void 0 : parsed.example, dynamic: parsed === null || parsed === void 0 ? void 0 : parsed.dynamic })));
+    return (0, function_1.pipe)(PreferencesDecoder.decode(preferences), E.bimap(err => prism_http_1.ProblemJsonError.fromTemplate(prism_http_1.UNPROCESSABLE_ENTITY, D.draw(err)), parsed => ({ code: parsed === null || parsed === void 0 ? void 0 : parsed.code, exampleKey: parsed === null || parsed === void 0 ? void 0 : parsed.example, dynamic: parsed === null || parsed === void 0 ? void 0 : parsed.dynamic })));
 };
 exports.getHttpConfigFromRequest = getHttpConfigFromRequest;

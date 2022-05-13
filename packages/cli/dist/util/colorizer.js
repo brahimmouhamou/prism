@@ -10,11 +10,11 @@ const transformPathParamsValues = (path, transform) => {
 };
 exports.transformPathParamsValues = transformPathParamsValues;
 const attachTagsToParamsValues = values => {
-    return lodash_1.mapValues(values, attachPrePostTags);
+    return (0, lodash_1.mapValues)(values, attachPrePostTags);
 };
 exports.attachTagsToParamsValues = attachTagsToParamsValues;
 const attachPrePostTags = (paramValue) => {
-    return lodash_1.isArray(paramValue)
+    return (0, lodash_1.isArray)(paramValue)
         ? paramValue.map(v => `${exports.PRE_PARAM_VALUE_TAG}${v}${exports.POST_PARAM_VALUE_TAG}`)
         : `${exports.PRE_PARAM_VALUE_TAG}${paramValue}${exports.POST_PARAM_VALUE_TAG}`;
 };

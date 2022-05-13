@@ -34,7 +34,7 @@ const createMultiProcessPrism = async (options) => {
         return;
     }
     else {
-        const logInstance = prism_core_1.createLogger('CLI', cliSpecificLoggerOptions);
+        const logInstance = (0, prism_core_1.createLogger)('CLI', cliSpecificLoggerOptions);
         return createPrismServerWithLogger(options, logInstance).catch((e) => {
             logInstance.fatal(e.message);
             cluster.worker.kill();
@@ -46,7 +46,7 @@ exports.createMultiProcessPrism = createMultiProcessPrism;
 const createSingleProcessPrism = options => {
     signale.await({ prefix: chalk.bgWhiteBright.black('[CLI]'), message: 'Starting Prism…' });
     const logStream = new stream_1.PassThrough();
-    const logInstance = prism_core_1.createLogger('CLI', cliSpecificLoggerOptions, logStream);
+    const logInstance = (0, prism_core_1.createLogger)('CLI', cliSpecificLoggerOptions, logStream);
     pipeOutputToSignale(logStream);
     return createPrismServerWithLogger(options, logInstance).catch((e) => {
         logInstance.fatal(e.message);
@@ -55,8 +55,8 @@ const createSingleProcessPrism = options => {
 };
 exports.createSingleProcessPrism = createSingleProcessPrism;
 async function createPrismServerWithLogger(options, logInstance) {
-    const operations = await operations_1.getHttpOperationsFromSpec(options.document);
-    await extensions_1.configureExtensionsFromSpec(options.document);
+    const operations = await (0, operations_1.getHttpOperationsFromSpec)(options.document);
+    await (0, extensions_1.configureExtensionsFromSpec)(options.document);
     if (operations.length === 0) {
         throw new Error('No operations found in the current file.');
     }
@@ -77,15 +77,15 @@ async function createPrismServerWithLogger(options, logInstance) {
             upstreamProxy: options.upstreamProxy,
         }
         : { ...shared, mock: { dynamic: options.dynamic }, errors: options.errors };
-    const server = prism_http_server_1.createServer(operations, {
+    const server = (0, prism_http_server_1.createServer)(operations, {
         cors: options.cors,
         config,
         components: { logger: logInstance.child({ name: 'HTTP SERVER' }) },
     });
     const address = await server.listen(options.port, options.host);
     operations.forEach(resource => {
-        const path = function_1.pipe(paths_1.createExamplePath(resource, colorizer_1.attachTagsToParamsValues), E.getOrElse(() => resource.path));
-        logInstance.info(`${resource.method.toUpperCase().padEnd(10)} ${address}${colorizer_1.transformPathParamsValues(path, chalk.bold.cyan)}`);
+        const path = (0, function_1.pipe)((0, paths_1.createExamplePath)(resource, colorizer_1.attachTagsToParamsValues), E.getOrElse(() => resource.path));
+        logInstance.info(`${resource.method.toUpperCase().padEnd(10)} ${address}${(0, colorizer_1.transformPathParamsValues)(path, chalk.bold.cyan)}`);
     });
     logInstance.start(`Prism is listening on ${address}`);
     return server;

@@ -1623,7 +1623,7 @@
 
 "@stoplight/prism-http@https://gitpkg.now.sh/brahimmouhamou/prism/packages/http":
   version "4.9.2"
-  resolved "https://gitpkg.now.sh/brahimmouhamou/prism/packages/http#283c7fe2b42836b1912d90a6021bce8358f9ec93"
+  resolved "https://gitpkg.now.sh/brahimmouhamou/prism/packages/http#a921ddd73d219891997f3ef9be73fe91ec57fc39"
   dependencies:
     "@stoplight/json" "^3.18.1"
     "@stoplight/json-schema-merge-allof" "0.7.8"

@@ -24,7 +24,7 @@ const mockCommand = {
         const { multiprocess, dynamic, port, host, cors, document, errors, } = parsedArgs;
         const createPrism = multiprocess ? createServer_1.createMultiProcessPrism : createServer_1.createSingleProcessPrism;
         const options = { cors, dynamic, port, host, document, multiprocess, errors };
-        return runner_1.runPrismAndSetupWatcher(createPrism, options);
+        return (0, runner_1.runPrismAndSetupWatcher)(createPrism, options);
     },
 };
 exports.default = mockCommand;

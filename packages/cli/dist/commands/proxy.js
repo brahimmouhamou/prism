@@ -38,9 +38,9 @@ const proxyCommand = {
     }),
     handler: parsedArgs => {
         parsedArgs.validateRequest = parsedArgs['validate-request'];
-        const p = lodash_1.pick(parsedArgs, 'dynamic', 'cors', 'host', 'port', 'document', 'multiprocess', 'upstream', 'errors', 'validateRequest', 'upstreamProxy');
+        const p = (0, lodash_1.pick)(parsedArgs, 'dynamic', 'cors', 'host', 'port', 'document', 'multiprocess', 'upstream', 'errors', 'validateRequest', 'upstreamProxy');
         const createPrism = p.multiprocess ? createServer_1.createMultiProcessPrism : createServer_1.createSingleProcessPrism;
-        return runner_1.runPrismAndSetupWatcher(createPrism, p);
+        return (0, runner_1.runPrismAndSetupWatcher)(createPrism, p);
     },
 };
 exports.default = proxyCommand;

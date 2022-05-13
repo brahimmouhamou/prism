@@ -15,7 +15,7 @@ function runPrismAndSetupWatcher(createPrism, options) {
             });
             watcher.on('change', () => {
                 server.logger.info('Restarting Prism...');
-                operations_1.getHttpOperationsFromSpec(options.document)
+                (0, operations_1.getHttpOperationsFromSpec)(options.document)
                     .then(operations => {
                     if (operations.length === 0) {
                         server.logger.info('No operations found in the current file, continuing with the previously loaded spec.');

@@ -6,15 +6,15 @@ const type_is_1 = require("type-is");
 const xmlSerializer = new fast_xml_parser_1.j2xParser({});
 const serializers = [
     {
-        test: (value) => !!type_is_1.is(value, ['application/json', 'application/*+json']),
+        test: (value) => !!(0, type_is_1.is)(value, ['application/json', 'application/*+json']),
         serializer: JSON.stringify,
     },
     {
-        test: (value) => !!type_is_1.is(value, ['application/xml', 'application/*+xml']),
+        test: (value) => !!(0, type_is_1.is)(value, ['application/xml', 'application/*+xml']),
         serializer: (data) => (typeof data === 'string' ? data : xmlSerializer.parse({ xml: data })),
     },
     {
-        test: (value) => !!type_is_1.is(value, ['text/*']),
+        test: (value) => !!(0, type_is_1.is)(value, ['text/*']),
         serializer: (data) => {
             if (['string', 'undefined'].includes(typeof data)) {
                 return data;

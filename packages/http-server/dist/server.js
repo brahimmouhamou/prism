@@ -34,10 +34,10 @@ function parseRequestBody(request) {
         return Promise.resolve(null);
     }
     if (typeIs(request, ['application/json', 'application/*+json'])) {
-        return micri_1.json(request, { limit: '10mb' });
+        return (0, micri_1.json)(request, { limit: '10mb' });
     }
     else {
-        return micri_1.text(request, { limit: '10mb' });
+        return (0, micri_1.text)(request, { limit: '10mb' });
     }
 }
 const createServer = (operations, opts) => {
@@ -59,8 +59,8 @@ const createServer = (operations, opts) => {
         components.logger.info({ input }, 'Request received');
         const requestConfig = config.mock === false
             ? E.right(config)
-            : function_1.pipe(getHttpConfigFromRequest_1.getHttpConfigFromRequest(input), E.map(operationSpecificConfig => ({ ...config, mock: fp_1.merge(config.mock, operationSpecificConfig) })));
-        function_1.pipe(TE.fromEither(requestConfig), TE.chain(requestConfig => prism.request(input, operations, requestConfig)), TE.chainIOEitherK(response => {
+            : (0, function_1.pipe)((0, getHttpConfigFromRequest_1.getHttpConfigFromRequest)(input), E.map(operationSpecificConfig => ({ ...config, mock: (0, fp_1.merge)(config.mock, operationSpecificConfig) })));
+        (0, function_1.pipe)(TE.fromEither(requestConfig), TE.chain(requestConfig => prism.request(input, operations, requestConfig)), TE.chainIOEitherK(response => {
             const { output } = response;
             const inputValidationErrors = response.validations.input.map(createErrorObjectWithPrefix('request'));
             const outputValidationErrors = response.validations.output.map(createErrorObjectWithPrefix('response'));
@@ -87,14 +87,14 @@ const createServer = (operations, opts) => {
             return IOE.fromEither(E.tryCatch(() => {
                 if (output.headers)
                     Object.entries(output.headers).forEach(([name, value]) => reply.setHeader(name, value));
-                micri_1.send(reply, output.statusCode, serialize_1.serialize(output.body, reply.getHeader('content-type')));
+                (0, micri_1.send)(reply, output.statusCode, (0, serialize_1.serialize)(output.body, reply.getHeader('content-type')));
             }, E.toError));
         }), TE.mapLeft((e) => {
             if (!reply.writableEnded) {
                 reply.setHeader('content-type', 'application/problem+json');
                 if (e.additional && e.additional.headers)
                     Object.entries(e.additional.headers).forEach(([name, value]) => reply.setHeader(name, value));
-                micri_1.send(reply, e.status || 500, JSON.stringify(prism_http_1.ProblemJsonError.toProblemJson(e)));
+                (0, micri_1.send)(reply, e.status || 500, JSON.stringify(prism_http_1.ProblemJsonError.toProblemJson(e)));
             }
             else {
                 reply.end();
@@ -108,13 +108,13 @@ const createServer = (operations, opts) => {
         res.setHeader('Access-Control-Allow-Credentials', 'true');
         res.setHeader('Access-Control-Expose-Headers', incomingHeaders['access-control-expose-headers'] || '*');
     }
-    const server = micri_1.default(micri_1.Router.router(micri_1.Router.on.options(() => opts.cors, (req, res) => {
+    const server = (0, micri_1.default)(micri_1.Router.router(micri_1.Router.on.options(() => opts.cors, (req, res) => {
         setCommonCORSHeaders(req.headers, res);
         if (!!req.headers['origin'] && !!req.headers['access-control-request-method']) {
             res.setHeader('Access-Control-Allow-Methods', req.headers['access-control-request-method'] || 'GET,DELETE,HEAD,PATCH,POST,PUT,OPTIONS');
             res.setHeader('Vary', 'origin');
             res.setHeader('Content-Length', '0');
-            return micri_1.send(res, 204);
+            return (0, micri_1.send)(res, 204);
         }
         return handler(req, res);
     }), micri_1.Router.otherwise((req, res, options) => {
@@ -122,7 +122,7 @@ const createServer = (operations, opts) => {
             setCommonCORSHeaders(req.headers, res);
         return handler(req, res, options);
     })));
-    const prism = prism_http_1.createInstance(config, components);
+    const prism = (0, prism_http_1.createInstance)(config, components);
     return {
         get prism() {
             return prism;
